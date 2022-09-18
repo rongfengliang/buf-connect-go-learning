@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package userlogin.v1;
+
+option go_package = "github.com/rongfengliang/go-connect-app/pkg/userlogin/v1;userloginv1";
+
+message LoginRequest{
+    string username =1;
+    string userpassword =2;
+}
+
+message LoginResponse{
+    string token =1;
+    int32 exprise =2;
+}
+
+service UserLoginService {
+    
+    rpc Login(LoginRequest) returns (LoginResponse){};
+}
