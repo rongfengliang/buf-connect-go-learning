@@ -30,9 +30,10 @@ func (s *UserLogin) Login(
 
 func main() {
 	userlogin := &UserLogin{}
+	api := http.NewServeMux()
+	api.Handle(userloginv1connect.NewUserLoginServiceHandler(userlogin))
 	mux := http.NewServeMux()
-	path, handler := userloginv1connect.NewUserLoginServiceHandler(userlogin)
-	mux.Handle(path, handler)
+	mux.Handle("/grpc/", http.StripPrefix("/grpc", api))
 	http.ListenAndServe(
 		"0.0.0.0:8080",
 		h2c.NewHandler(mux, &http2.Server{}),
